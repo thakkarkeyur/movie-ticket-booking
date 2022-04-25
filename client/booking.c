@@ -10,9 +10,9 @@ message ticket;
 
 void printTicket()
 {
-    printf("\n----------------------------\n");
+    printf("\n--------------------------------------\n");
     printf("\tBooked Ticket Details\n");
-    printf("----------------------------\n");
+    printf("--------------------------------------\n\n");
     printf("Username: %s\n", ticket.order.uname);
     printf("Movie Name: %s\n", ticket.order.movie);
     printf("Cinema: %s\n", ticket.order.cinema);
@@ -21,15 +21,16 @@ void printTicket()
     for (int i = 0; i < ticket.order.seat_num; i++)
     {
         printf(" %d", ticket.order.seat_id[i]);
-    } /*
-     printf("\n%s\n", ticket.order.pay);
-     if (strcmp(ticket.order.pay, "Thanh toan online") == 0)
-     {
-         printf("Card Number: %s\n", ticket.order.card);
-         printf("Date expire: %s\n", ticket.order.valid_date);
-         printf("CCV: %d\n", ticket.order.ccv);
-     }*/
-    printf("----------------------------\n");
+    }
+    printf("\n"); /*
+      printf("\n%s\n", ticket.order.pay);
+      if (strcmp(ticket.order.pay, "Thanh toan online") == 0)
+      {
+          printf("Card Number: %s\n", ticket.order.card);
+          printf("Date expire: %s\n", ticket.order.valid_date);
+          printf("CCV: %d\n", ticket.order.ccv);
+      }*/
+    printf("--------------------------------------\n");
 }
 
 void confirmOrder()
@@ -118,7 +119,7 @@ void selectSeat()
     available_seats = countAvailableSeats(ticket.seat.status, ticket.seat.row * ticket.seat.col);
     do
     {
-        printf("Please enter number of seat you want to book: ");
+        printf("\nPlease enter number of seat you want to book: ");
         scanf("%d", &num);
         if (num <= 0 || num > available_seats)
         {
@@ -131,7 +132,7 @@ void selectSeat()
         valid = 0;
         do
         {
-            printf("Please enter the ID of seat no.%d: ", i + 1);
+            printf("\nPlease enter the ID of seat no.%d: ", i + 1);
             scanf("%d", &select);
 
             if ((valueInArr(select, ticket.seat.id, ticket.seat.row * ticket.seat.col) == 0) && (valueInArr(select, ticket.order.seat_id, i) == 1) &&
@@ -184,7 +185,7 @@ void selectTime()
     }
     do
     {
-        printf("Please enter the ID of time: ");
+        printf("\nPlease enter the ID of time: ");
         scanf("%d", &select);
         if (valueInArr(select, ticket.time.id, ticket.time.num) == 1)
         {
@@ -229,7 +230,7 @@ void selectCinema()
     }
     do
     {
-        printf("Please enter the ID of cinema: ");
+        printf("\nPlease enter the ID of cinema: ");
         scanf("%d", &select);
         if (valueInArr(select, ticket.cinema.id, ticket.cinema.num) == 1)
         {
@@ -274,7 +275,7 @@ void selectMovie()
     }
     do
     {
-        printf("Please enter the ID of movie: ");
+        printf("\nPlease enter the ID of movie: ");
         scanf("%d", &select);
         if (valueInArr(select, ticket.movie.id, ticket.movie.num) == 1)
         {
@@ -314,13 +315,14 @@ void booking(int fd, char *uname)
     socketfd = fd;
     strcpy(ticket.order.uname, uname);
 
-    do
-    {
-        printf("\n1. Movie Booking\n");
-        printf("2. Orders Management\n");
-        printf("Please enter your choice: ");
-        scanf("%d", &choice);
-    } while (choice < 1 || choice > 2);
+    // do
+    // {
+    //     printf("\n1. Movie Booking\n");
+    //     // printf("2. Orders Management\n");
+    //     printf("\nPlease enter your choice: ");
+    //     scanf("%d", &choice);
+    // } while (choice < 1 || choice > 2);
+    choice = 1;
     printf("\n");
     if (choice == 1)
     {

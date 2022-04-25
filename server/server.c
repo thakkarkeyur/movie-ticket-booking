@@ -27,10 +27,10 @@ void initServer()
     socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd < 0)
     {
-        printf("[-]Error in connection.\n");
+        printf("Error in connection.\n");
         exit(1);
     }
-    printf("[+]Server Socket is created.\n");
+    printf("Server Socket is created...\n");
 
     // preparation of the socket address
     memset(&servaddr, 0, sizeof(servaddr));
@@ -40,17 +40,17 @@ void initServer()
 
     if (bind(socketfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
     {
-        printf("[-]Error in binding.\n");
+        printf("Error in binding.\n");
         exit(1);
     }
 
     if (listen(socketfd, LISTENQ) == 0)
     {
-        printf("[+]Listening....\n");
+        printf("Listening....\n");
     }
     else
     {
-        printf("[-]Error in binding.\n");
+        printf("Error in binding.\n");
     }
 }
 
@@ -81,7 +81,7 @@ int main(int argc, char **argv)
         {
             exit(1);
         }
-        printf("\n[+]%s:%d - Connection accepted\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+        printf("\n%s:%d - Connection accepted\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
         if ((childpid = fork()) == 0)
         {
@@ -97,18 +97,18 @@ int main(int argc, char **argv)
 
                 if (n == 0)
                 {
-                    printf("[+]%s:%d - Disconnected\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Disconnected\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     exit(0);
                 }
 
                 state = ntohl(state);
                 switch (state)
                 {
-                    // case LOGIN:
-                    //     printf("[+]%s:%d - Request login from user ", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    //     logIn(connfd);
-                    //     printf("[+]%s:%d - Login successful\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    //     break;
+                case LOGIN:
+                    printf("%s:%d - Request login from user ", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    logIn(connfd);
+                    printf("%s:%d - Login successful\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    break;
 
                     // case SIGNUP:
                     //     break;
@@ -117,48 +117,48 @@ int main(int argc, char **argv)
                     break;
 
                 case BOOKING:
-                    printf("\n[+]%s:%d - Request BOOKING\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request BOOKING\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     setFd(connfd);
                     break;
 
                 case MOVIE:
-                    printf("\n[+]%s:%d - Request MOVIE\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request MOVIE\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     sendListMovies(connfd);
                     ticket.movie_id = recvInt(connfd);
                     recvStr(connfd, ticket.movie);
-                    printf("[+]%s:%d - Sent MOVIE\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    printf("[+]%s:%d - Choose movie: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.movie);
+                    printf("%s:%d - Sent MOVIE\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Choose movie: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.movie);
                     break;
 
                 case CINEMA:
-                    printf("\n[+]%s:%d - Request CINEMA\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request CINEMA\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     sendListCinemas(connfd);
                     ticket.cinema_id = recvInt(connfd);
                     recvStr(connfd, ticket.cinema);
-                    printf("[+]%s:%d - Sent CINEMA\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    printf("[+]%s:%d - Choose cinema: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.cinema);
+                    printf("%s:%d - Sent CINEMA\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Choose cinema: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.cinema);
                     break;
 
                 case TIME:
-                    printf("\n[+]%s:%d - Request TIME\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request TIME\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     sendListTimes(connfd);
                     ticket.time_id = recvInt(connfd);
                     recvStr(connfd, ticket.time);
-                    printf("[+]%s:%d - Sent TIME\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-                    printf("[+]%s:%d - Choose time: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.time);
+                    printf("%s:%d - Sent TIME\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Choose time: %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.time);
                     break;
 
                 case SEAT:
-                    printf("\n[+]%s:%d - Request SEAT\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request SEAT\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     sendListSeats(connfd);
-                    printf("[+]%s:%d - Sent SEAT\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Sent SEAT\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
                     ticket.seat_num = recvInt(connfd);
                     for (int i = 0; i < ticket.seat_num; i++)
                     {
                         ticket.seat_id[i] = recvInt(connfd);
                     }
-                    printf("[+]%s:%d - Choose seat(s):", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Choose seat(s):", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     for (int i = 0; i < ticket.seat_num; i++)
                     {
                         printf(" %d", ticket.seat_id[i]);
@@ -167,14 +167,14 @@ int main(int argc, char **argv)
                     break;
                 /*
                 case PAY:
-                    printf("\n[+]%s:%d - Request PAY\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Request PAY\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     ticket.total = FARE * ticket.seat_num;
                     sendListPayments(ticket.total);
-                    printf("[+]%s:%d - Sent PAY\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("%s:%d - Sent PAY\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
                     ticket.pay_id = recvInt(connfd);
                     recvStr(connfd, ticket.pay);
-                    printf("[+]%s:%d - Choose payment type %d - %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.pay_id, ticket.pay);
+                    printf("%s:%d - Choose payment type %d - %s\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port), ticket.pay_id, ticket.pay);
                     if (ticket.pay_id == 2)
                     {
                         recvStr(connfd, ticket.card);
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
                     break;
                 */
                 case CONFIRM:
-                    printf("\n[+]%s:%d - Order Confirm\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+                    printf("\n%s:%d - Order Confirm\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
                     confirmOrder();
                     break;
 

@@ -13,7 +13,7 @@ enum
 {
     SUCCESS,
     FAILURE,
-    // LOGIN,
+    LOGIN,
     SIGNUP,
     BOOKING,
     ORDERS,

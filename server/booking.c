@@ -16,7 +16,7 @@ void sendListMovies()
 {
     int num = 4;
     int id[] = {1, 2, 4, 9};
-    char *name[] = {"Frozen", "Avenger", "IT", "Joker"};
+    char *name[] = {"The Kashmir Files", "RRR", "K.G.F: Chapter 2", "Baahubali: The Beginning"};
 
     sendInt(socketfd, num);
 
@@ -31,7 +31,7 @@ void sendListCinemas()
 {
     int num = 3;
     char id[] = {17, 24, 36};
-    char *name[] = {"The Kashmir Files", "RRR", "K.G.F: Chapter 2"};
+    char *name[] = {"INOX Cinemas", "Cinemax Cinemas", "City Pulse Cinema"};
 
     sendInt(socketfd, num);
 
@@ -46,7 +46,7 @@ void sendListTimes()
 {
     int num = 4;
     char id[] = {1, 2, 3, 4};
-    char *name[] = {"08:30", "14:50", "19:15", "23:25"};
+    char *name[] = {"09:00", "12:15", "18:00", "23:30"};
 
     sendInt(socketfd, num);
 

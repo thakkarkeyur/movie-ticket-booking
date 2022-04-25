@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "order.h": "c",
-        "time.h": "c",
-        "booking.h": "c"
-    }
-}

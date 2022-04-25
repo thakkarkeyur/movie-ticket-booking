@@ -23,10 +23,10 @@ void connectToServer(char *ip)
     // If socketfd<0 there was an error in the creation of the socket
     if ((socketfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
-        perror("[-]Problem in creating the socket");
+        perror("Problem in creating the socket");
         exit(2);
     }
-    printf("[+]Client Socket is created.\n");
+    printf("Client Socket is created...\n");
 
     // Creation of the socket
     memset(&servaddr, 0, sizeof(servaddr));
@@ -37,10 +37,10 @@ void connectToServer(char *ip)
     // Connection of the client to the socket
     if (connect(socketfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
     {
-        perror("[-]Problem in connecting to the server");
+        perror("Problem in connecting to the server");
         exit(3);
     }
-    printf("[+]Connected to Server.\n");
+    printf("Connected to Server.\n");
 }
 
 // int menuAuthen()
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     char uname[MAXLINE];
     if (argc != 2)
     {
-        perror("[-]Missing IP address of the server");
+        perror("Missing IP address of the server");
         exit(1);
     }
 
