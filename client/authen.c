@@ -13,12 +13,10 @@ int logIn(int socketfd, char *uname)
 
     printf("\nPlease enter your name: ");
     scanf("%s", uname);
-    // printf("Password: ");
-    // scanf("%s", passwd);
 
     sendInt(socketfd, LOGIN);
     sendStr(socketfd, uname);
-    // sendStr(socketfd, passwd);
+
     state = recvInt(socketfd);
     return state;
 }

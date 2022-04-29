@@ -6,7 +6,6 @@
 #include "cinema.h"
 #include "time.h"
 #include "seat.h"
-// #include "pay.h"
 #include "order.h"
 
 enum
@@ -14,14 +13,12 @@ enum
     SUCCESS,
     FAILURE,
     LOGIN,
-    SIGNUP,
     BOOKING,
     ORDERS,
     MOVIE,
     CINEMA,
     TIME,
     SEAT,
-    PAY,
     CONFIRM
 };
 
@@ -34,7 +31,6 @@ typedef struct message
     cinema cinema;
     time time;
     seat seat;
-    // pay pay;
     order order;
 } message;
 

@@ -16,11 +16,5 @@ typedef struct order
     int seat_num;
     int seat_id[10];
 
-    int total;
-    char pay[50];
-    int pay_id;
-    char card[20];
-    int ccv;
-    char valid_date[10];
 } order;
 #endif

@@ -11,8 +11,6 @@ void receiveTime();
 void selectTime();
 void receiveSeat();
 void selectSeat();
-void receivePayment();
-void selectPayment();
 void confirmOrder();
 void printTicket();
 #endif

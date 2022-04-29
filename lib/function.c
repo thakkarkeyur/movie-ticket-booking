@@ -24,7 +24,6 @@ void recvStr(int fd, char *str)
     recv(fd, &len, sizeof(len), 0);
     recv(fd, content, ntohl(len), 0);
     strcpy(str, content);
-    // printf("%s\n", str);
 }
 
 void sendInt(int fd, int i)
@@ -37,7 +36,6 @@ int recvInt(int fd)
 {
     int num;
     recv(fd, &num, sizeof(num), 0);
-    // printf("%d\n", ntohl(num));
     return ntohl(num);
 }
 

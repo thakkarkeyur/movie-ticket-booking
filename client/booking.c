@@ -14,22 +14,15 @@ void printTicket()
     printf("\tBooked Ticket Details\n");
     printf("--------------------------------------\n\n");
     printf("Username: %s\n", ticket.order.uname);
-    printf("Movie Name: %s\n", ticket.order.movie);
+    printf("\nMovie Name: %s\n", ticket.order.movie);
     printf("Cinema: %s\n", ticket.order.cinema);
     printf("Time: %s\n", ticket.order.time);
-    printf("Seat(s): ");
+    printf("\nBooked Seat Number: ");
     for (int i = 0; i < ticket.order.seat_num; i++)
     {
         printf(" %d", ticket.order.seat_id[i]);
     }
-    printf("\n"); /*
-      printf("\n%s\n", ticket.order.pay);
-      if (strcmp(ticket.order.pay, "Thanh toan online") == 0)
-      {
-          printf("Card Number: %s\n", ticket.order.card);
-          printf("Date expire: %s\n", ticket.order.valid_date);
-          printf("CCV: %d\n", ticket.order.ccv);
-      }*/
+    printf("\n"); 
     printf("--------------------------------------\n");
 }
 
@@ -39,67 +32,7 @@ void confirmOrder()
     recvInt(socketfd);
     printTicket();
 }
-/*
-void selectPayment()
-{
-    int select, valid = 0, indx;
 
-    printf("Total cost: %d VND\n", ticket.order.total);
-    for (int i = 0; i < ticket.pay.num; i++)
-    {
-        printf("%d: %s\n", ticket.pay.id[i], ticket.pay.name[i]);
-    }
-    do
-    {
-        printf("Please enter the ID of payment type: ");
-        scanf("%d", &select);
-        if (valueInArr(select, ticket.pay.id, ticket.pay.num) == 1)
-        {
-            printf("ID is invalid !\n");
-        }
-        else
-            valid = 1;
-    } while (valid == 0);
-    printf("\n");
-
-    indx = getIndex(ticket.pay.id, ticket.pay.num, select);
-    ticket.order.pay_id = select;
-    strcpy(ticket.order.pay, ticket.pay.name[indx]);
-
-    sendInt(socketfd, ticket.order.pay_id);
-    sendStr(socketfd, ticket.order.pay);
-
-    if (select == 2)
-    {
-        printf("Card Number: ");
-        scanf("%s", ticket.order.card);
-        printf("Date expire: ");
-        scanf("%s", ticket.order.valid_date);
-        printf("CCV: ");
-        scanf("%d", &ticket.order.ccv);
-
-        sendStr(socketfd, ticket.order.card);
-        sendStr(socketfd, ticket.order.valid_date);
-        sendInt(socketfd, ticket.order.ccv);
-    }
-
-    confirmOrder();
-}*/
-
-/*
-void receivePayment()
-{
-  sendInt(socketfd, PAY);
-  ticket.order.total = recvInt(socketfd);
-  ticket.pay.num = recvInt(socketfd);
-  for (int i = 0; i < ticket.pay.num; i++)
-  {
-      ticket.pay.id[i] = recvInt(socketfd);
-      recvStr(socketfd, ticket.pay.name[i]);
-  }
-  selectPayment();
-}
-*/
 void selectSeat()
 {
     int valid, count = 0, num, select, available_seats;
@@ -136,10 +69,11 @@ void selectSeat()
             scanf("%d", &select);
 
             if ((valueInArr(select, ticket.seat.id, ticket.seat.row * ticket.seat.col) == 0) && (valueInArr(select, ticket.order.seat_id, i) == 1) &&
-                (ticket.seat.status[select - 1] == 0))
+                (ticket.seat.status[select] == 0))
             {
                 ticket.order.seat_id[i] = select;
                 valid = 1;
+                ticket.seat.status[i] = 1;
             }
             else
             {
@@ -156,8 +90,7 @@ void selectSeat()
         sendInt(socketfd, ticket.order.seat_id[i]);
     }
 
-    confirmOrder();
-    // receivePayment();
+    confirmOrder(ticket.order.seat_id);
 }
 
 void receiveSeat()
@@ -315,13 +248,6 @@ void booking(int fd, char *uname)
     socketfd = fd;
     strcpy(ticket.order.uname, uname);
 
-    // do
-    // {
-    //     printf("\n1. Movie Booking\n");
-    //     // printf("2. Orders Management\n");
-    //     printf("\nPlease enter your choice: ");
-    //     scanf("%d", &choice);
-    // } while (choice < 1 || choice > 2);
     choice = 1;
     printf("\n");
     if (choice == 1)

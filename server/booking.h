@@ -7,6 +7,5 @@ void sendListMovies();
 void sendListCinemas();
 void sendListTimes();
 void sendListSeats();
-void sendListPayments(int fare);
-void confirmOrder();
+void confirmOrder(int seatNum);
 #endif
