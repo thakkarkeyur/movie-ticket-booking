@@ -42,12 +42,12 @@ void connectToServer()
 
 int main(int argc, char **argv)
 {
-    int choice = 0, re;
+    int choice = 0;
     char uname[MAXLINE];
 
     connectToServer();
 
-    re = logIn(socketfd, uname);
+    username(socketfd, uname);
     booking(socketfd, uname);
 
     return 0;

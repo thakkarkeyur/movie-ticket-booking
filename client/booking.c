@@ -22,7 +22,7 @@ void printTicket()
     {
         printf(" %d", ticket.order.seat_id[i]);
     }
-    printf("\n"); 
+    printf("\n");
     printf("--------------------------------------\n");
 }
 
@@ -110,7 +110,7 @@ void receiveSeat()
 
 void selectTime()
 {
-    int select, valid = 0, indx;
+    int select, valid = 0, index;
 
     for (int i = 0; i < ticket.time.num; i++)
     {
@@ -129,9 +129,9 @@ void selectTime()
     } while (valid == 0);
     printf("\n");
 
-    indx = getIndex(ticket.time.id, ticket.time.num, select);
+    index = getIndex(ticket.time.id, ticket.time.num, select);
     ticket.order.time_id = select;
-    strcpy(ticket.order.time, ticket.time.name[indx]);
+    strcpy(ticket.order.time, ticket.time.name[index]);
 
     sendInt(socketfd, ticket.order.time_id);
     sendStr(socketfd, ticket.order.time);
@@ -155,7 +155,7 @@ void receiveTime()
 
 void selectCinema()
 {
-    int select, valid = 0, indx;
+    int select, valid = 0, index;
 
     for (int i = 0; i < ticket.cinema.num; i++)
     {
@@ -174,9 +174,9 @@ void selectCinema()
     } while (valid == 0);
     printf("\n");
 
-    indx = getIndex(ticket.cinema.id, ticket.cinema.num, select);
+    index = getIndex(ticket.cinema.id, ticket.cinema.num, select);
     ticket.order.cinema_id = select;
-    strcpy(ticket.order.cinema, ticket.cinema.name[indx]);
+    strcpy(ticket.order.cinema, ticket.cinema.name[index]);
 
     sendInt(socketfd, ticket.order.cinema_id);
     sendStr(socketfd, ticket.order.cinema);
@@ -200,7 +200,7 @@ void receiveCinema()
 
 void selectMovie()
 {
-    int select, valid = 0, indx;
+    int select, valid = 0, index;
 
     for (int i = 0; i < ticket.movie.num; i++)
     {
@@ -219,9 +219,9 @@ void selectMovie()
     } while (valid == 0);
     printf("\n");
 
-    indx = getIndex(ticket.movie.id, ticket.movie.num, select);
+    index = getIndex(ticket.movie.id, ticket.movie.num, select);
     ticket.order.movie_id = select;
-    strcpy(ticket.order.movie, ticket.movie.name[indx]);
+    strcpy(ticket.order.movie, ticket.movie.name[index]);
 
     sendInt(socketfd, ticket.order.movie_id);
     sendStr(socketfd, ticket.order.movie);

@@ -5,7 +5,7 @@
 
 #define MAXLINE 4096
 
-void logIn(int socketfd)
+void username(int socketfd)
 {
     char uname[MAXLINE];
 

@@ -12,7 +12,7 @@ enum
 {
     SUCCESS,
     FAILURE,
-    LOGIN,
+    USERNAME,
     BOOKING,
     ORDERS,
     MOVIE,

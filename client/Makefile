@@ -1,19 +1,18 @@
-# CFLAGS = -c -Wall
 CFLAGS = -c
 CC = gcc
-LIBS =  -lm 
+LIBS =  -lm #For Math Library
 LIB = ../lib
 
 all: client
 
-client: client.o authen.o booking.o function.o
-	${CC} client.o authen.o booking.o function.o -o client
+client: client.o users.o booking.o function.o
+	${CC} client.o users.o booking.o function.o -o client
 
 client.o: client.c
 	${CC} ${CFLAGS} client.c
 
-authen.o: authen.c
-	${CC} ${CFLAGS} authen.c
+users.o: users.c
+	${CC} ${CFLAGS} users.c
 
 booking.o: booking.c
 	${CC} ${CFLAGS} booking.c

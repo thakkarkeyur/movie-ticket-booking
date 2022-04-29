@@ -39,16 +39,7 @@ int recvInt(int fd)
     return ntohl(num);
 }
 
-void subStr(char *str, char *buffer, int start, int end)
-{
-    int j = 0;
-    for (int i = start; i <= end; ++i)
-    {
-        buffer[j++] = str[i];
-    }
-    buffer[j] = 0;
-}
-
+// Array values validations
 int valueInArr(int val, int arr[], int size)
 {
     if (size == 0)
@@ -59,24 +50,6 @@ int valueInArr(int val, int arr[], int size)
             return 0;
     }
     return 1;
-}
-
-void getName(char *str, char *buffer, int size, int selectId, int name_len[], int id[])
-{
-    int start = 0;
-
-    for (int i = 0; i < size; i++)
-    {
-        if (id[i] == selectId)
-            selectId = i;
-    }
-
-    for (int i = 0; i < size; i++)
-    {
-        if (i == selectId)
-            subStr(str, buffer, start, start + name_len[i] - 1);
-        start += name_len[i];
-    }
 }
 
 int getIndex(int *arr, int num, int select)

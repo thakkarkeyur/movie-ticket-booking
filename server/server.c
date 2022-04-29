@@ -6,14 +6,13 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <signal.h>
 #include "booking.h"
 #include "../lib/message.h"
 #include "../lib/function.h"
 
-#define MAXLINE 4096   /*max text line length*/
-#define SERV_PORT 3000 /*port*/
-#define LISTENQ 8      /*maximum number of client connections */
+#define MAXLINE 4096   // Max text line length
+#define SERV_PORT 3000 // Port number
+#define LISTENQ 8      // Maximum number of client connections
 
 int socketfd;
 order ticket;
@@ -23,7 +22,7 @@ void initServer()
 {
     struct sockaddr_in servaddr;
     // creation of the socket
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
+    socketfd = socket(AF_INET, SOCK_STREAM, 0); // AF_INET - IPv4   // SOCK_STREAM - TCP
     if (socketfd < 0)
     {
         printf("Error in connection.\n");
@@ -53,23 +52,12 @@ void initServer()
     }
 }
 
-void termination_handler(int signum)
-{
-    child_process_running = 0;
-}
-
-int main(int argc, char **argv)
+int main()
 {
     int connfd, n, state;
-    pid_t childpid;
-    socklen_t clilen;
+    pid_t childpid;   // Storing the child process ID
+    socklen_t clilen; // Storing socket length of client
     struct sockaddr_in cliaddr;
-    struct sigaction new_action, old_action;
-
-    new_action.sa_handler = termination_handler;
-    sigemptyset(&new_action.sa_mask);
-    new_action.sa_flags = 0;
-    sigaction(SIGINT, &new_action, &old_action); 
 
     initServer();
     while (1)
@@ -85,7 +73,7 @@ int main(int argc, char **argv)
         if ((childpid = fork()) == 0)
         {
             close(socketfd);
-            while (child_process_running)
+            while (1)
             {
                 n = recv(connfd, &state, sizeof(state), 0);
                 if (n < 0)
@@ -103,13 +91,8 @@ int main(int argc, char **argv)
                 state = ntohl(state);
                 switch (state)
                 {
-                case LOGIN:
-                    printf("Request login from user...");
-                    logIn(connfd);
-                    printf("Login successful...\n");
-                    break;
-
-                case ORDERS:
+                case USERNAME:
+                    username(connfd);
                     break;
 
                 case BOOKING:
@@ -148,9 +131,10 @@ int main(int argc, char **argv)
                     printf("\nRequest SEAT...\n");
                     sendListSeats(connfd);
                     printf("Sent SEAT...\n");
-                     FILE *fptr;
-                    fptr = fopen("../seats.txt","r+");
-                    if(fptr == NULL){
+                    FILE *fptr;
+                    fptr = fopen("../seats.txt", "r+");
+                    if (fptr == NULL)
+                    {
                         printf("Error in file opening for book a seat. \n");
                         return 0;
                     }
@@ -159,10 +143,10 @@ int main(int argc, char **argv)
                     for (int i = 0; i < ticket.seat_num; i++)
                     {
                         ticket.seat_id[i] = recvInt(connfd);
-                          fseek(fptr,ticket.seat_id[i],SEEK_SET);
-                          fputs("1",fptr);     
+                        fseek(fptr, ticket.seat_id[i], SEEK_SET);
+                        fputs("1", fptr);
                     }
-                    printf("Choose seat(s): ");
+                    printf("Choosen seat(s): ");
                     for (int i = 0; i < ticket.seat_num; i++)
                     {
                         printf(" %d", ticket.seat_id[i]);

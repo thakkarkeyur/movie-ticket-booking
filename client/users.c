@@ -6,15 +6,14 @@
 
 #define MAXLINE 4096
 
-int logIn(int socketfd, char *uname)
+int username(int socketfd, char *uname)
 {
-    char passwd[MAXLINE];
     int state;
 
     printf("\nPlease enter your name: ");
     scanf("%s", uname);
 
-    sendInt(socketfd, LOGIN);
+    sendInt(socketfd, USERNAME);
     sendStr(socketfd, uname);
 
     state = recvInt(socketfd);
